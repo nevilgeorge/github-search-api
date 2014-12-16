@@ -8,7 +8,7 @@ var params = {
 	'followers': '>2',
 	'repos': '>5'
 };
-github.queryUsers(params, function(data) {
+github.queryRepos(params, function(data) {
 	console.log(data);
 });
 

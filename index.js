@@ -87,7 +87,7 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 			if (k === 'repos' || k === 'followers') {
 				// repos and followers allows user to pass in comparison operators >, <, =
 				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
-			} else if (k !== 'term' && k !== 'page') {
+			} else if (k !== 'term' && k !== 'page' && k !== 'sort' && k !== 'order') {
 				// term and page are handled separately/ differently 
 				url += 	'+' + k + ':' + params[k];
 			}
@@ -96,6 +96,14 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 		// add the page number to the end of the query, if a page is specified
 		if (typeof params['page'] !== 'undefined') {
 			url += '&page=' + params['page'];
+		}
+
+		if (typeof params['sort'] !== 'undefined') {
+			url += '&sort=' + params['sort'];
+		}
+
+		if (typeof params['order'] !== 'undefined') {
+			url += '&order=' + params['order'];
 		}
 	}
 
@@ -123,5 +131,25 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 	// return this instance of GithubSearcher
 	return this;
 };
+
+// method to query repositories
+GithubSearcher.prototype.queryRepos = function(params, callback) {
+	// throw error if the callback is not a function
+	if (typeof callback !== 'function') {
+		throw new Error('Callback is not a function!');
+	}
+
+	// ensure that some parameters are passed into the method
+	if (_.isEmpty(params) || params === null) {
+		throw new Error('Parameters are invalid!');
+	}
+
+	var url = this.endpoints.base + this.endpoints.reposUrl;
+
+	
+
+	callback(url);
+	return this;
+}
 
 module.exports = GithubSearcher;
