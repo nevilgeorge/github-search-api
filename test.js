@@ -2,12 +2,11 @@
 
 var GithubSearcher = require('./index.js');
 
-var github = new GithubSearcher({username: 'nevilgeorge', password: 'george'});
+var github = new GithubSearcher({username: 'nevilgeorge', password: 'george93'});
 var params = {
 	'created': '2013-12-16..2014-12-16',
 	'followers': '>2',
-	'repos': '>5',
-	'page': 4
+	'repos': '>5'
 };
 github.queryUsers(params, function(data) {
 	console.log(data);
