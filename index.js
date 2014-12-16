@@ -64,13 +64,13 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 		throw new Error('Parameters are invalid!');
 	}
 
-	var url = this.endpoints.base + this.endpoints.usersUrl + '?';
+	var url = this.endpoints.base + this.endpoints.usersUrl + '?q=';
 
 	if (typeof params === 'string') {
-		url += 'q=' + params;
+		url += params;
 
 	} else if (typeof params === 'object') {
-		url += 'q=';
+		
 		if (typeof params['term'] !== 'undefined') {
 			url += params['term'];
 		}
@@ -78,13 +78,17 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 		for (var k in params) {
 			if (k === 'repos' || k === 'followers') {
 				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
-			} else if (k !== 'term') {
+			} else if (k !== 'term' && k !== 'page') {
 				url += 	'+' + k + ':' + params[k];
 			}
 		}
+
+		if (typeof params['page'] !== 'undefined') {
+			url += '&page=' + params['page'];
+		}
 	}
 
-	console.log(url);
+	console.log('Querying at endpoint: ' + url);
 	var options = {
 		url: url,
 		headers: {
