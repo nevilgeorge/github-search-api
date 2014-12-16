@@ -1,0 +1,15 @@
+{
+  "name": "github-search-api",
+  "version": "0.0.0",
+  "description": "Node wrapper for the Github Search API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nevil George",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.51.0",
+    "underscore": "^1.7.0"
+  }
+}
