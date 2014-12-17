@@ -29,7 +29,27 @@ function convertSign(sign) {
 	return output;
 };
 
-// Create a class
+// adds parameters that describe how the results are displayed to the end of the url
+function appendResultParams(params, url) {
+// add the page number to the end of the query, if a page is specified
+	if (typeof params['page'] !== 'undefined') {
+		url += '&page=' + params['page'];
+	}
+
+	// add sort if exists
+	if (typeof params['sort'] !== 'undefined') {
+		url += '&sort=' + params['sort'];
+	}
+
+	// add order if exists
+	if (typeof params['order'] !== 'undefined') {
+		url += '&order=' + params['order'];
+	}
+
+	return url;
+}
+
+// Create GithubSearcher class
 function GithubSearcher(options) {
 	if (!(this instanceof GithubSearcher)) {
 		return new GithubSearcher(options);
@@ -39,9 +59,19 @@ function GithubSearcher(options) {
 		throw new Error('Please pass in your username and password!');
 	}
 
+	// create static member of this class that holds the authentication information
 	this.auth = {
 		username: options['username'],
 		password: options['password']
+	};
+
+	// create a static variable that holds the options JSON that needs to be passed into the GET request
+	this.options = {
+		url: '',
+		headers: {
+			'User-Agent': this.auth.username,
+			'Authorization': 'Basic ' + new Buffer(this.auth.username + ':' + this.auth.password).toString('base64')
+		}
 	};
 
 	this.endpoints = {
@@ -93,36 +123,18 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 			}
 		}
 
-		// add the page number to the end of the query, if a page is specified
-		if (typeof params['page'] !== 'undefined') {
-			url += '&page=' + params['page'];
-		}
-
-		// add sort if exists
-		if (typeof params['sort'] !== 'undefined') {
-			url += '&sort=' + params['sort'];
-		}
-
-		// add order if exists
-		if (typeof params['order'] !== 'undefined') {
-			url += '&order=' + params['order'];
-		}
+		// add last parts to the url if any of them are defined
+		url = appendResultParams(params, url);
 	}
 
 	// Print the url we are pinging
 	console.log('Querying at endpoint: ' + url);
 
-	// Create a JSON object to define API url and request headers
-	var options = {
-		url: url,
-		headers: {
-			'User-Agent': this.auth.username,
-			'Authorization': 'Basic ' + new Buffer(this.auth.username + ':' + this.auth.password).toString('base64')
-		}
-	};
+	// update this.options to hold the new url
+	this.options.url = url;
 
 	// Use the request module to ping the url
-	request.get(options, function(error, response, body) {
+	request.get(this.options, function(error, response, body) {
 		console.log(body)
 		if (!error && response.statusCode === 200) {
 			// pass our result to the callback
@@ -160,33 +172,35 @@ GithubSearcher.prototype.queryRepos = function(params, callback) {
 		// go through members of the JSON object passed into the method
 		for (var k in params) {
 			if (k === 'forks' || k === 'stars' || k === 'size') {
-				// repos and followers allows user to pass in comparison operators >, <, =
+				// forks, stars and size allows user to pass in comparison operators >, <, =
 				// convert first element in string, and then concatenate the remainder of the string
 				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
 			} else if (k !== 'term' && k !== 'page' && k !== 'sort' && k !== 'order') {
-				// term and page are handled separately/ differently 
+				// term, page, sort and order are handled separately/ differently 
 				url += 	'+' + k + ':' + params[k];
 			}
 		}
 
-		// add the page number to the end of the query, if a page is specified
-		if (typeof params['page'] !== 'undefined') {
-			url += '&page=' + params['page'];
-		}
-
-		// add sort if exists
-		if (typeof params['sort'] !== 'undefined') {
-			url += '&sort=' + params['sort'];
-		}
-
-		// add order if exists
-		if (typeof params['order'] !== 'undefined') {
-			url += '&order=' + params['order'];
-		}
+		// add last parts to the url if any of them are defined
+		url = appendResultParams(params, url);
 
 	}
 
-	callback(url);
+	// Print the url we are pinging
+	console.log('Querying at endpoint: ' + url);
+
+	// updated this.options to hold the new url
+	this.options.url = url;
+
+	// use request module to ping url
+	request.get(this.options, function(error, response, body) {
+		if (!error && response.statusCode === 200) {
+			// pass our result to the callback
+			callback(JSON.parse(body));
+		}
+	});
+
+	// return current instance of GithubSearcher
 	return this;
 }
 
