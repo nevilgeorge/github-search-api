@@ -98,10 +98,12 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 			url += '&page=' + params['page'];
 		}
 
+		// add sort if exists
 		if (typeof params['sort'] !== 'undefined') {
 			url += '&sort=' + params['sort'];
 		}
 
+		// add order if exists
 		if (typeof params['order'] !== 'undefined') {
 			url += '&order=' + params['order'];
 		}
@@ -144,9 +146,45 @@ GithubSearcher.prototype.queryRepos = function(params, callback) {
 		throw new Error('Parameters are invalid!');
 	}
 
-	var url = this.endpoints.base + this.endpoints.reposUrl;
+	var url = this.endpoints.base + this.endpoints.reposUrl + '?q=';
 
-	
+	if (typeof params === 'string') {
+		url += params;
+	} else if (typeof params === 'object') {
+
+		// add the term part first, since it is added differently
+		if (typeof params['term'] !== 'undefined') {
+			url += params['term'];
+		}
+
+		// go through members of the JSON object passed into the method
+		for (var k in params) {
+			if (k === 'forks' || k === 'stars' || k === 'size') {
+				// repos and followers allows user to pass in comparison operators >, <, =
+				// convert first element in string, and then concatenate the remainder of the string
+				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
+			} else if (k !== 'term' && k !== 'page' && k !== 'sort' && k !== 'order') {
+				// term and page are handled separately/ differently 
+				url += 	'+' + k + ':' + params[k];
+			}
+		}
+
+		// add the page number to the end of the query, if a page is specified
+		if (typeof params['page'] !== 'undefined') {
+			url += '&page=' + params['page'];
+		}
+
+		// add sort if exists
+		if (typeof params['sort'] !== 'undefined') {
+			url += '&sort=' + params['sort'];
+		}
+
+		// add order if exists
+		if (typeof params['order'] !== 'undefined') {
+			url += '&order=' + params['order'];
+		}
+
+	}
 
 	callback(url);
 	return this;
