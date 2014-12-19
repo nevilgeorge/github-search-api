@@ -202,6 +202,65 @@ GithubSearcher.prototype.queryRepos = function(params, callback) {
 
 	// return current instance of GithubSearcher
 	return this;
+};
+
+GithubSearcher.prototype.queryCode = function(params, callback) {
+
+	// throw error if the callback is not a function
+	if (typeof callback !== 'function') {
+		throw new Error('Callback is not a function!');
+	}
+
+	// ensure that some parameters are passed into the method
+	if (_.isEmpty(params) || params === null) {
+		throw new Error('Parameters are invalid!');
+	}
+
+	var url = this.endpoints.base + this.endpoints.codeUrl + '?q=';
+
+	if (typeof params === 'string') {
+		url += params;
+	} else if (typeof params === 'object') {
+
+		// add the term part first, since it is added differently
+		if (typeof params['term'] !== 'undefined') {
+			url += params['term'];
+		}
+
+		// go through members of the JSON object passed into the method
+		for (var k in params) {
+			if (k === 'size') {
+				// size allows user to pass in comparison operators >, <, =
+				// convert first element in string, and then concatenate the remainder of the string
+				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
+			} else if (k !== 'term' && k !== 'page' && k !== 'sort' && k !== 'order') {
+				// term, page, sort and order are handled separately/ differently 
+				url += 	'+' + k + ':' + params[k];
+			}
+		}
+
+		// add last parts to the url if any of them are defined
+		url = appendResultParams(params, url);
+
+	}
+
+	// Print the url we are pinging
+	console.log('Querying at endpoint: ' + url);
+
+	// updated this.options to hold the new url
+	this.options.url = url;
+
+	// use request module to ping url
+	request.get(this.options, function(error, response, body) {
+		if (!error && response.statusCode === 200) {
+			// pass our result to the callback
+			callback(JSON.parse(body));
+		}
+	});
+
+	// return current instance of GithubSearcher
+	return this;
+
 }
 
 module.exports = GithubSearcher;
