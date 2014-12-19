@@ -47,6 +47,17 @@ function appendResultParams(params, url) {
 	}
 
 	return url;
+};
+
+// function to add the first + sign in a query
+// checks to see if this is the first element in the query or not
+function addFirstPlus(url) {
+	// checks to see where the last character in the string is a =
+	if (url[url.length - 1] === '=') {
+		return '';
+	} else {
+		return '+';
+	}
 }
 
 // Create GithubSearcher class
@@ -116,10 +127,10 @@ GithubSearcher.prototype.queryUsers = function(params, callback) {
 		for (var k in params) {
 			if (k === 'repos' || k === 'followers') {
 				// repos and followers allows user to pass in comparison operators >, <, =
-				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
+				url += addFirstPlus(url) + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
 			} else if (k !== 'term' && k !== 'page' && k !== 'sort' && k !== 'order') {
 				// term and page are handled separately/ differently 
-				url += 	'+' + k + ':' + params[k];
+				url += 	addFirstPlus(url) + k + ':' + params[k];
 			}
 		}
 
@@ -174,10 +185,10 @@ GithubSearcher.prototype.queryRepos = function(params, callback) {
 			if (k === 'forks' || k === 'stars' || k === 'size') {
 				// forks, stars and size allows user to pass in comparison operators >, <, =
 				// convert first element in string, and then concatenate the remainder of the string
-				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
+				url += addFirstPlus(url) + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
 			} else if (k !== 'term' && k !== 'page' && k !== 'sort' && k !== 'order') {
 				// term, page, sort and order are handled separately/ differently 
-				url += 	'+' + k + ':' + params[k];
+				url += 	addFirstPlus(url) + k + ':' + params[k];
 			}
 		}
 
@@ -232,10 +243,10 @@ GithubSearcher.prototype.queryCode = function(params, callback) {
 			if (k === 'size') {
 				// size allows user to pass in comparison operators >, <, =
 				// convert first element in string, and then concatenate the remainder of the string
-				url += '+' + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
+				url += addFirstPlus(url) + k + ':' + convertSign(params[k][0]) + params[k].substring(1, params[k].length);
 			} else if (k !== 'term' && k !== 'page' && k !== 'sort' && k !== 'order') {
 				// term, page, sort and order are handled separately/ differently 
-				url += 	'+' + k + ':' + params[k];
+				url += 	addFirstPlus(url) + k + ':' + params[k];
 			}
 		}
 
