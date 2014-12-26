@@ -1,0 +1,94 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@1.5.0-alpha-2
+3 info using node@v0.10.29
+4 verbose node symlink /usr/local/bin/node
+5 verbose publish [ '.' ]
+6 verbose cache add [ '.', null ]
+7 verbose cache add spec="." args=[".",null]
+8 verbose cache add local package /Users/nevilgeorge/Documents/nodeJS_projects/github-search-api
+9 silly lockFile 3a52ce78- .
+10 verbose lock . /Users/nevilgeorge/.npm/3a52ce78-.lock
+11 verbose tar pack [ '/Users/nevilgeorge/.npm/github-search-api/0.0.1/package.tgz',
+11 verbose tar pack   '.' ]
+12 verbose tarball /Users/nevilgeorge/.npm/github-search-api/0.0.1/package.tgz
+13 verbose folder .
+14 info prepublish github-search-api@0.0.1
+15 silly lockFile 1f1177db-tar tar://.
+16 verbose lock tar://. /Users/nevilgeorge/.npm/1f1177db-tar.lock
+17 silly lockFile 68a4525b-hub-search-api-0-0-1-package-tgz tar:///Users/nevilgeorge/.npm/github-search-api/0.0.1/package.tgz
+18 verbose lock tar:///Users/nevilgeorge/.npm/github-search-api/0.0.1/package.tgz /Users/nevilgeorge/.npm/68a4525b-hub-search-api-0-0-1-package-tgz.lock
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile 1f1177db-tar tar://.
+21 silly lockFile 68a4525b-hub-search-api-0-0-1-package-tgz tar:///Users/nevilgeorge/.npm/github-search-api/0.0.1/package.tgz
+22 silly lockFile 68a4525b-hub-search-api-0-0-1-package-tgz tar:///Users/nevilgeorge/.npm/github-search-api/0.0.1/package.tgz
+23 silly lockFile 843091ee--github-search-api-0-0-1-package /Users/nevilgeorge/.npm/github-search-api/0.0.1/package
+24 verbose lock /Users/nevilgeorge/.npm/github-search-api/0.0.1/package /Users/nevilgeorge/.npm/843091ee--github-search-api-0-0-1-package.lock
+25 silly lockFile 843091ee--github-search-api-0-0-1-package /Users/nevilgeorge/.npm/github-search-api/0.0.1/package
+26 silly lockFile 843091ee--github-search-api-0-0-1-package /Users/nevilgeorge/.npm/github-search-api/0.0.1/package
+27 silly lockFile 3a52ce78- .
+28 silly lockFile 3a52ce78- .
+29 silly publish { name: 'github-search-api',
+29 silly publish   version: '0.0.1',
+29 silly publish   description: 'Node wrapper for the Github Search API',
+29 silly publish   main: 'index.js',
+29 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+29 silly publish   author: { name: 'Nevil George' },
+29 silly publish   license: 'ISC',
+29 silly publish   dependencies: { request: '^2.51.0', underscore: '^1.7.0' },
+29 silly publish   readme: 'github-search-api\n=================\n\n##Overview\n\nNode.js wrapper for the Github Search API. \n\nThe Github Search API lets you use queries to find information regarding users, repos, issues and code. The wrapper lets you query data using a JSON object instead of a query string, and get data asynchronously as you would expect with a Node.js module.\n\n##Installation\n\nRun `npm install github-search-api` from your terminal in the directory of your Node.js app.\n\n##Usage\n\nHere\'s an example of searching for a user called \'tom\' who has more than 42 repos and more than 1000 followers.\n\n\n\tvar GithubSearcher = require(\'github-search-api\');\n\tvar github = new GithubSearcher({username: \'<username>\', password: \'<password>\'});\n\t\n\tvar params = {\n\t\t\'term\': \'tom\',\n\t\t\'repos\': \'>42\',\n\t\t\'followers\': \'>1000\'\n\t};\n\t\n\tgithub.searchUsers(params, function(data) {\n\t\tconsole.log(data);\n\t});\n\t\nInstantiating the GithubSearcher requires your Github username and password because they are needed to send authenticated HTTP requests.\n\nThe params variable can be either a string (formatted as the Github Search API requires) or a JSON object with keys that are parameters listed on the Github Search API page (https://developer.github.com/v3/search/). The \'term\' key is an additional feature, that should hold the term you are searching for. \n\nUse >, <, = for defining a range when using numbers.\n\nThe callback in every method of the GithubSearcher only returns one value, the JSON results returned from Github.\n\n##Repository\n\nhttp://www.github.com/nevilgeorge/github-search-api\n\n##Questions?\n\nFeel free to email me!',
+29 silly publish   readmeFilename: 'README.md',
+29 silly publish   gitHead: '7119e5c9cd5fce3cafe614571440632cb5f58955',
+29 silly publish   _id: 'github-search-api@0.0.1',
+29 silly publish   _shasum: '8c8089b9166508d657ab5037b35c34132c6687f2',
+29 silly publish   _from: '.' }
+30 verbose mapToRegistry name github-search-api
+31 verbose mapToRegistry uri https://registry.npmjs.org/github-search-api
+32 verbose publish registryBase https://registry.npmjs.org/
+33 verbose request where is /github-search-api
+34 verbose request registry https://registry.npmjs.org/
+35 verbose request id e8227ab4a3fddc67
+36 verbose request url raw /github-search-api
+37 verbose request url resolving [ 'https://registry.npmjs.org/', './github-search-api' ]
+38 verbose request url resolved https://registry.npmjs.org/github-search-api
+39 verbose request where is https://registry.npmjs.org/github-search-api
+40 verbose request setting basic auth
+41 info trying registry request attempt 1 at 19:48:43
+42 http PUT https://registry.npmjs.org/github-search-api
+43 http 403 https://registry.npmjs.org/github-search-api
+44 verbose headers { date: 'Fri, 26 Dec 2014 14:18:28 GMT',
+44 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+44 verbose headers   'content-type': 'application/json',
+44 verbose headers   'cache-control': 'max-age=60',
+44 verbose headers   'content-length': '3787',
+44 verbose headers   'accept-ranges': 'bytes',
+44 verbose headers   via: '1.1 varnish',
+44 verbose headers   'x-served-by': 'cache-ams4127-AMS',
+44 verbose headers   'x-cache': 'MISS',
+44 verbose headers   'x-cache-hits': '0',
+44 verbose headers   'x-timer': 'S1419603508.032595,VS0,VE761',
+44 verbose headers   'keep-alive': 'timeout=10, max=50',
+44 verbose headers   connection: 'Keep-Alive' }
+45 error publish Failed PUT 403
+46 error Error: forbidden cannot modify pre-existing version: 0.0.1
+46 error old={"name":"github-search-api","version":"0.0.1","description":"Node wrapper for the Github Search API","main":"index.js","scripts":{"test":"echo \"Error: no test specified\" && exit 1"},"author":{"name":"Nevil George"},"license":"ISC","dependencies":{"request":"^2.51.0","underscore":"^1.7.0"},"gitHead":"cb66b75729cca1d0be7e581055813459e3d68abb","_id":"github-search-api@0.0.1","_shasum":"04dc156cc2d163f67d730d87d5788fe9305895ff","_from":".","_npmVersion":"1.5.0-alpha-2","_npmUser":{"name":"nevilgeorge","email":"liven93@gmail.com"},"maintainers":[{"name":"nevilgeorge","email":"liven93@gmail.com"}],"dist":{"shasum":"04dc156cc2d163f67d730d87d5788fe9305895ff","tarball":"http://registry.npmjs.org/github-search-api/-/github-search-api-0.0.1.tgz"}}
+46 error new={"name":"github-search-api","version":"0.0.1","description":"Node wrapper for the Github Search API","main":"index.js","scripts":{"test":"echo \"Error: no test specified\" && exit 1"},"author":{"name":"Nevil George"},"license":"ISC","dependencies":{"request":"^2.51.0","underscore":"^1.7.0"},"readme":"github-search-api\u000a=================\u000a\u000a##Overview\u000a\u000aNode.js wrapper for the Github Search API. \u000a\u000aThe Github Search API lets you use queries to find information regarding users, repos, issues and code. The wrapper lets you query data using a JSON object instead of a query string, and get data asynchronously as you would expect with a Node.js module.\u000a\u000a##Installation\u000a\u000aRun `npm install github-search-api` from your terminal in the directory of your Node.js app.\u000a\u000a##Usage\u000a\u000aHere's an example of searching for a user called 'tom' who has more than 42 repos and more than 1000 followers.\u000a\u000a\u000a\u0009var GithubSearcher = require('github-search-api');\u000a\u0009var github = new GithubSearcher({username: '<username>', password: '<password>'});\u000a\u0009\u000a\u0009var params = {\u000a\u0009\u0009'term': 'tom',\u000a\u0009\u0009'repos': '>42',\u000a\u0009\u0009'followers': '>1000'\u000a\u0009};\u000a\u0009\u000a\u0009github.searchUsers(params, function(data) {\u000a\u0009\u0009console.log(data);\u000a\u0009});\u000a\u0009\u000aInstantiating the GithubSearcher requires your Github username and password because they are needed to send authenticated HTTP requests.\u000a\u000aThe params variable can be either a string (formatted as the Github Search API requires) or a JSON object with keys that are parameters listed on the Github Search API page (https://developer.github.com/v3/search/). The 'term' key is an additional feature, that should hold the term you are searching for. \u000a\u000aUse >, <, = for defining a range when using numbers.\u000a\u000aThe callback in every method of the GithubSearcher only returns one value, the JSON results returned from Github.\u000a\u000a##Repository\u000a\u000ahttp://www.github.com/nevilgeorge/github-search-api\u000a\u000a##Questions?\u000a\u000aFeel free to email me!","readmeFilename":"README.md","gitHead":"7119e5c9cd5fce3cafe614571440632cb5f58955","_id":"github-search-api@0.0.1","_shasum":"8c8089b9166508d657ab5037b35c34132c6687f2","_from":".","_npmVersion":"1.5.0-alpha-2","_npmUser":{"name":"nevilgeorge","email":"liven93@gmail.com"},"maintainers":[{"name":"nevilgeorge","email":"liven93@gmail.com"}],"dist":{"shasum":"8c8089b9166508d657ab5037b35c34132c6687f2","tarball":"http://registry.npmjs.org/github-search-api/-/github-search-api-0.0.1.tgz"}}: github-search-api
+46 error     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:313:14)
+46 error     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:251:65)
+46 error     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:123:22)
+46 error     at Request.emit (events.js:98:17)
+46 error     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:893:14)
+46 error     at Request.emit (events.js:117:20)
+46 error     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:844:12)
+46 error     at IncomingMessage.emit (events.js:117:20)
+46 error     at _stream_readable.js:929:16
+46 error     at process._tickCallback (node.js:419:13)
+47 error If you need help, you may report this *entire* log,
+47 error including the npm and node versions, at:
+47 error     <http://github.com/npm/npm/issues>
+48 error System Darwin 14.0.0
+49 error command "node" "/usr/local/bin/npm" "publish"
+50 error cwd /Users/nevilgeorge/Documents/nodeJS_projects/github-search-api
+51 error node -v v0.10.29
+52 error npm -v 1.5.0-alpha-2
+53 verbose exit [ 1, true ]
